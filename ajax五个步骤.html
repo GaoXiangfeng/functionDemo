@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function XHR() {
+            var xhr
+            if(window.XMLHttpRequest){
+                xhr = new XMLHttpRequest();
+            }else{
+                xhr = new ActiveXObject("Microsoft.XMLHTTP")
+            }
+
+            xhr.open("post", "https://www.baidu.com");
+           // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send(null);
+            xhr.onreadystatechange = function () {
+                // 判断服务器是否响应，判断异步对象的响应状态
+                if (xhr.status == 200 && xhr.readyState == 4) {
+                    document.querySelector(".showmsg").innerHTML = xhr.responseText;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
