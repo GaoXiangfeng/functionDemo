@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var throttle = function (func, delay) {
+            var prev = Date.now();
+            return function () {
+                var context = this;
+                var args = arguments;
+                var now = Date.now();
+                if (now - prev >= delay) {
+                    func.apply(context, args);
+                    prev = Date.now();
+                }
+            }
+        }
+        function handle() {
+            console.log(Math.random());
+        }
+        window.addEventListener('resize', throttle(handle, 1000));
+    </script>
+</body>
+
+</html>
