@@ -15,16 +15,15 @@
             return function () {
                 if (timeout !== null) {
                     clearTimeout(timeout);
-                    console.log('clear:' + timeout)
+                    //console.log('clear:' + timeout)
                 }
                 timeout = setTimeout(fn, wait);
-                console.log(timeout)
+                //console.log(timeout)
             }
         }
         // 处理函数
         function handle() {
             console.log(Math.random());
-            
         }
         // 滚动事件
         window.addEventListener('resize', debounce(handle, 0));

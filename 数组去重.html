@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function unique(arr) {
+            var formArr = arr.sort()
+            var newArr = [formArr[0]]
+            for (let i = 1; i < formArr.length; i++) {
+                if (formArr[i] !== formArr[i - 1]) {
+                    newArr.push(formArr[i])
+                }
+            }
+            return newArr
+        }
+
+        console.log(unique([1, 1, 2, 3, 5, 3, 1, 5, 6, 7, 4]))
+ 
+        function unique1(arr) {
+            return Array.from(new Set(arr)); // 利用Array.from将Set结构转换成数组
+        }
+
+        console.log(unique1([1, 1, 2, 3, 5, 3, 1, 5, 6, 7, 4]))
+    </script>
+</body>
+
+</html>
