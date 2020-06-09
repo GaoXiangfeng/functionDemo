@@ -9,16 +9,25 @@
 
 <body>
     <script>
-        // 防抖
-        function debounce(fn, wait) {
-            var timeout = null;
-            return function () {
-                if (timeout !== null) {
-                    clearTimeout(timeout);
-                    //console.log('clear:' + timeout)
+        // 防抖--合并版
+        function debounce_merge(fn, wait = 500, isImmediate = false) {
+            var timerId = null;
+            var flag = true;
+            if (isImmediate) {
+                return function () {
+                    clearTimeout(timerId);
+                    if (flag) {
+                        fn.apply(this, arguments);
+                        flag = false
+                    }
+                    timerId = setTimeout(() => { flag = true }, wait)
                 }
-                timeout = setTimeout(fn, wait);
-                //console.log(timeout)
+            }
+            return function () {
+                clearTimeout(timerId);
+                timerId = setTimeout(() => {
+                    fn.apply(this, arguments)
+                }, wait)
             }
         }
         // 处理函数
@@ -26,7 +35,9 @@
             console.log(Math.random());
         }
         // 滚动事件
-        window.addEventListener('resize', debounce(handle, 0));
+        window.addEventListener('resize', debounce_merge(handle, 1000, true));
+
+
 
     </script>
 </body>

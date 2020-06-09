@@ -9,22 +9,35 @@
 
 <body>
     <script>
-        var throttle = function (func, delay) {
-            var prev = Date.now();
+        var throttle = function throttle_merge(fn, wait = 500, isImmediate = false) {
+            var flag = true;
+            var timer = null;
+            if (isImmediate) {
+                return function () {
+                    if (flag) {
+                        fn.apply(this, arguments);
+                        flag = false;
+                        timer = setTimeout(() => {
+                            flag = true
+                        }, wait)
+                    }
+                }
+            }
             return function () {
-                var context = this;
-                var args = arguments;
-                var now = Date.now();
-                if (now - prev >= delay) {
-                    func.apply(context, args);
-                    prev = Date.now();
+                if (flag == true) {
+                    flag = false
+                    var timer = setTimeout(() => {
+                        fn.apply(this, arguments)
+                        flag = true
+                    }, wait)
                 }
             }
         }
+
         function handle() {
             console.log(Math.random());
         }
-        window.addEventListener('resize', throttle(handle, 1000));
+        window.addEventListener('resize', throttle(handle, 1000,true));
     </script>
 </body>
 
