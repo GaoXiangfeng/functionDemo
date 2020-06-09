@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = new String('123')
+        var b = String('123')
+        var c = '123'
+        console.log(a == b, a === b, b == c, b === c, a == c, a === c)
+        //true false true true true false
+        console.log(typeof a)
+        //'object'
+
+        var a = new String('123')
+        var b = new String('123')
+        console.log(a == b, a === b)
+        //false false
+    </script>
+</body>
+
+</html>

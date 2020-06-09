@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            async 函数是什么？一句话，它就是 Generator 函数的语法糖
+            1.async函数的await命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 resolved 的 Promise 对象）。
+            2.返回值是 Promise。
+                async函数的返回值是 Promise 对象，这比 Generator 函数的返回值是 Iterator 对象方便多了。你可以用then方法指定下一步的操作。
+        */
+        async function getStockPriceByName(name) {
+            const symbol = await getStockSymbol(name);
+            const stockPrice = await getStockPrice(symbol);
+            return stockPrice;
+        }
+
+        getStockPriceByName('goog').then(function (result) {
+            console.log(result);
+        });
+    </script>
+</body>
+
+</html>
