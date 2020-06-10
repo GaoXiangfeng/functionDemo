@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function clone(value) {
+            if (Array.isArray(value)) {
+                return value.map(clone)
+            } else if (value && typeof value === 'object') {
+                const res = {}
+                for (const key in value) {
+                    res[key] = clone(value[key])
+                }
+                return res
+            } else {
+                return value
+            }
+        }
+
+        let a = [1,2,3,4]
+
+        let obj = {
+            p1: '1',
+            p2: '2',
+        }
+
+        let b = clone(a)
+        console.log(b)
+        b.shift()
+        console.log(b)
+        console.log(a)
+
+        let obj2 = clone(obj)
+        console.log(obj2)
+    </script>
+</body>
+
+</html>
