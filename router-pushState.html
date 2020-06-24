@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="handlePushState()">pushState</button>
+    <button onclick="handleBack()">back</button>
+    <button onclick="handleForward()">forward</button>
+    <script>
+        
+        let index = 0
+        function handlePushState(){
+            index = index + 1
+           // window.history.pushState(`/page${index}`,`/page${index}`,`/page${index}`)
+            window.history.pushState('a',null,'router-pushState.html?b=1');
+            console.log(window.history.state)
+            console.log(window.history)
+        }
+
+        function handleBack(){
+            window.history.back()
+            console.log(window.history.state)
+            console.log(window.history)
+        }
+
+        function handleForward(){
+            window.history.forward()
+            console.log(window.history.state)
+            console.log(window.history)
+        }
+    </script>
+</body>
+</html>

@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <script>
+        // function parent () {
+        //     this.a = '11'
+        // }
+
+        // let child = new parent()
+
+        // //console.log(child.a)
+
+        // var name = '3'
+
+        // function fn(){
+        //     console.log(name)
+        // }
+        // function a(){
+        //     var name = '22'
+        //     fn()
+        // }
+
+        // a()
+
+        new Promise((resolve,reject) => {
+            console.log(1)
+            //reject('1')
+            throw new Error('error')
+        }).then((res)=>{
+            console.log('2',res)
+        },(err)=>{
+            console.log('3',err)
+            //return new Promise.reject(err)
+        }).then((res)=>{
+            console.log('4',res)
+        },(err)=>{
+            console.log('5',err)
+        }).catch(err=>{
+            console.log('6')
+            console.log(err)
+        })
+    </script>
 </body>
+
 </html>
