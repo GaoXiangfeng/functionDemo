@@ -80,43 +80,55 @@
         返回一个新的promise对象
     */
     Promise.prototype.then = function (onResolved, onRejected) {
+
+        onResolved = typeof onResolved === 'function' ?  onResolved : value => value
+        //指定默认的失败的回调（实现错误/异常传透的关键步骤）
+        onRejected = typeof onRejected === 'function' ?  onRejected : reason => { throw reason} //向后传递失败的reason
+
         const self = this
 
         //返回一个新的promise
         return new Promise((resolve, reject) => {
-            if (self.states === PENDING) {
-                //假设当前状态为pending状态，将回调函数保存起来
-                self.callbacks.push({
-                    onResolved,
-                    onRejected
-                })
-            } else if (self.states === RESOLVED) {
-                setTimeout(() => {
-                    /*
+            function handle(callback){
+                /*
                         1.如果抛出异常，return的promise就会失败，reason就是error
                         2.如果回调函数不是promise，return的promise就是成功，value就是返回值
                         3.如果回调函数是promise，return的promise就是这个promise的结果
                     */
-                    try {
-                        const result = onResolved(self.data)
-                        if (result instanceof Promise) {
-                            //3.如果回调函数是promise，return的promise就是这个promise的结果
-                            result.then(value => {
-                                resolve(value)
-                            }, reason => {
-                                reject(reason)
-                            })
-                        } else {
-                            resolve(result)
-                        }
-                    } catch (error) {
-                        reject(error)
+                   try {
+                    const result = callback(self.data)
+                    if (result instanceof Promise) {
+                        //3.如果回调函数是promise，return的promise就是这个promise的结果
+                        result.then(value => {
+                            resolve(value)
+                        }, reason => {
+                            reject(reason)
+                        })
+                    } else {
+                        resolve(result)
                     }
+                } catch (error) {
+                    reject(error)
+                }
+            }
 
+            if (self.states === PENDING) {
+                //假设当前状态为pending状态，将回调函数保存起来
+                self.callbacks.push({
+                    onResolved(value) {
+                        handle(onResolved)
+                    },
+                    onRejected(reason) {
+                        handle(onRejected)
+                    }
+                })
+            } else if (self.states === RESOLVED) {
+                setTimeout(() => {
+                    handle(onResolved)
                 })
             } else { //rejected
                 setTimeout(() => {
-                    onRejected(self.data)
+                    handle(onRejected)
                 })
             }
         })
@@ -126,7 +138,7 @@
     promise 原型对象上的方法 catch
     */
     Promise.prototype.catch = function (onRejected) {
-
+        return this.then(undefined,onRejected)
     }
 
     /*
